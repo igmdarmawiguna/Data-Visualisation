@@ -1,0 +1,61 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "data": {
+        "url": "https://raw.githubusercontent.com/tiadavies/Assignment_2/main/merged_data.csv"
+    },
+    "params": [
+  {
+    "name": "Region_selection",
+    "value": null,
+    "bind": {
+      "input": "select",
+      "options": [null,
+        "Northern America and Europe",
+        "Latin America and the Caribbean",
+        "Sub-Saharan Africa",
+        "Central and Southern Asia",
+        "Eastern and South-eastern Asia",
+        "Western Asia and Northern Africa",
+        "Australia and New Zealand"
+      ],
+      "labels": ["Show All",
+        "Northern America and Europe",
+        "Latin America and the Caribbean",
+        "Sub-Saharan Africa",
+        "Central and Southern Asia",
+        "Eastern and South-eastern Asia",
+        "Western Asia and Northern Africa",
+        "Australia and New Zealand"
+      ]
+    }
+  },
+  {
+    "name": "Region_selection_key",
+    "expr": "Region_selection == null ? null : lower(replace(Region_selection, /[^A-Za-z]/g, ''))"
+  }
+],
+"transform": [
+  {"filter":"isValid(datum.BMI) && isNumber(datum.BMI) && datum.BMI > 0"},
+  {"calculate":"lower(replace(datum.SDG_Region, /[^A-Za-z]/g, ''))","as":"region_key"},
+  {"filter":"Region_selection_key == null || datum.region_key == Region_selection_key"}
+],
+"encoding": {
+  "color": {
+    "field": "region_key",
+    "type": "nominal",
+    "scale": {
+      "domain": [
+        "northernamericaandeurope",
+        "latinamericaandthecaribbean",
+        "subsaharanafrica",
+        "centralandsouthernasia",
+        "easternandsoutheasternasia",
+        "westernasiaandnorthernafrica",
+        "australiaandnewzealand"
+      ],
+      "range": ["#1f77b4","#ff7f0e","#2ca02c","#d62728","#9467bd","#8c564b","#e377c2"]
+    }
+  }
+}
+}
+

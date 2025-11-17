@@ -1,0 +1,92 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {
+    "url": "https://raw.githubusercontent.com/tiadavies/Assignment_2/main/merged_data.csv"
+  },
+  "transform": [
+    {"filter": "datum.BMI != null && datum.BMI > 0"},
+    {
+      "filter": "Region_selection == null || lower(replace(datum.SDG_Region, /\\s+/g, '')) == lower(replace(Region_selection, /\\s+/g, ''))"
+    }
+  ],
+  "params": [
+    {
+      "name": "Region_selection",
+      "value": null,
+      "bind": {
+        "input": "select",
+        "options": [
+          null,
+          "Northern America and Europe",
+          "Latin America and the Caribbean",
+          "Sub-Saharan Africa",
+          "Central and Southern Asia",
+          "Eastern and South-eastern Asia",
+          "Western Asia and Northern Africa",
+          "Australia and New Zealand"
+        ],
+        "labels": [
+          "Show All",
+          "Northern America and Europe",
+          "Latin America and the Caribbean",
+          "Sub-Saharan Africa",
+          "Central and Southern Asia",
+          "Eastern and South-eastern Asia",
+          "Western Asia and Northern Africa",
+          "Australia and New Zealand"
+        ],
+        "name": "Region Selection: "
+      }
+    }
+  ],
+  "mark": {
+    "type": "boxplot",
+    "extent": "min-max",
+    "outliers": true,
+    "tooltip": true
+  },
+  "encoding": {
+    "x": {
+      "field": "SDG_Region",
+      "type": "nominal",
+      "title": "Region",
+      "axis": {"labels": false}
+    },
+    "y": {
+      "field": "BMI",
+      "type": "quantitative",
+      "title": "BMI"
+    },
+    "color": {
+      "field": "SDG_Region",
+      "type": "nominal",
+      "scale": {
+        "domain": [
+          "Northern America and Europe",
+          "Latin America and the Caribbean",
+          "Sub-Saharan Africa",
+          "Central and Southern Asia",
+          "Eastern and South-eastern Asia",
+          "Western Asia and Northern Africa",
+          "Australia and New Zealand"
+        ],
+        "range": [
+          "blue",
+          "yellow",
+          "green",
+          "brown",
+          "purple",
+          "red",
+          "orange"
+        ]
+      },
+      "legend": null
+    },
+    "tooltip": [
+      {"field": "SDG_Region", "type": "nominal", "title": "Region"},
+      {"field": "BMI", "type": "quantitative", "title": "BMI"}
+    ]
+  }
+}
+
+
